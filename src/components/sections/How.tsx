@@ -32,12 +32,12 @@ export function How() {
         </Reveal>
 
         <Reveal>
-          <figure className="mx-auto max-w-[22rem]">
+          <figure className="mx-auto max-w-[24rem]">
             <Image
               src="/media/popover-needs-you.webp"
               alt={copy.how.popoverAlt}
-              width={360}
-              height={767}
+              width={840}
+              height={1148}
               sizes="(min-width: 768px) 352px, 90vw"
               className="h-auto w-full rounded-2xl border border-ink/10 shadow-[0_18px_40px_-16px_rgb(11_42_74/0.4)]"
             />

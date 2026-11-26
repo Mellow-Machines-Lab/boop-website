@@ -1,6 +1,6 @@
 /*
-  Saves a 390px-wide screenshot of every home page section, and of the other
-  pages, to screenshots/. Start the site first (npm run dev, or npm start), then:
+  Saves a 390px-wide screenshot of every home page section and of the other
+  pages, and one desktop picture of the home page, to screenshots/. Start the site first (npm run dev, or npm start), then:
 
     npm run screenshots                       # http://127.0.0.1:3000
     npm run screenshots -- https://some.url   # any deployment
@@ -44,6 +44,17 @@ for (const [name, path] of [
   await page.goto(`${base}${path}`, { waitUntil: "networkidle" });
   await page.screenshot({ path: new URL(`${name}.png`, out).pathname, fullPage: true });
 }
+
+// The home page at desktop size, in one tall picture. Scroll first, so lazy
+// images load.
+const desktop = await browser.newPage({ viewport: { width: 1280, height: 800 }, reducedMotion: "reduce" });
+await desktop.goto(`${base}/`, { waitUntil: "networkidle" });
+for (const section of await desktop.locator("[data-section]").all()) {
+  await section.scrollIntoViewIfNeeded();
+}
+await desktop.waitForLoadState("networkidle");
+await desktop.evaluate(() => window.scrollTo(0, 0));
+await desktop.screenshot({ path: new URL("desktop-full.png", out).pathname, fullPage: true });
 
 await browser.close();
 console.log(`saved to ${out.pathname}`);

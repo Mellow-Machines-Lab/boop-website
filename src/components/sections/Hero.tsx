@@ -33,7 +33,7 @@ export function Hero() {
         </p>
 
         <div className="mt-4 grid items-center gap-5 md:mt-14 md:grid-cols-[1fr_1.05fr] md:gap-14">
-          <div className="relative mx-auto w-full max-w-[17rem] md:order-2 md:max-w-none">
+          <div className="relative mx-auto w-full max-w-[17rem] md:order-2 md:max-w-[29rem]">
             {film ? (
               <video
                 className="block w-full rounded-[1.75rem] bg-bezel shadow-[0_18px_40px_-12px_rgb(11_42_74/0.45)]"

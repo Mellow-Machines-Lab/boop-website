@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { copy, REPO_URL } from "@/lib/copy";
 import { Section, SectionHeading } from "@/components/Section";
@@ -10,6 +11,14 @@ export function Footer() {
     <Section id="S7" label={copy.footer.heading} className="pb-16">
       <Reveal>
         <div className="mx-auto flex max-w-lg flex-col gap-5 text-center">
+          <Image
+            src="/media/boop-happy-peach.webp"
+            alt=""
+            width={720}
+            height={720}
+            sizes="128px"
+            className="mx-auto h-32 w-32 rounded-[2rem]"
+          />
           <SectionHeading>{copy.footer.heading}</SectionHeading>
           <p className="text-lg text-ink-soft">{copy.footer.body}</p>
           <div className="text-left">

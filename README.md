@@ -70,11 +70,21 @@ Boop is an adult desk gadget for developers, and the page is a waitlist.
 
 ## Media
 
-`public/media/` holds captures of the real gel slime screen, taken from
-`media/boop.gif` and `media/moods.gif` in
-[Mellow-Machines-Lab/SlimeBuddy](https://github.com/Mellow-Machines-Lab/SlimeBuddy)
-and cut into short muted MP4 loops, each with a WebP poster. The menu-bar
-popover is from buddygotchi's `documentation/media/`.
+`public/media/` holds captures of Boop's real screen: short muted MP4 loops,
+each with a WebP poster. They are recorded in full colour from buddygotchi's
+native simulator, which runs the firmware's own drawing on the Mac. To make
+them again after the character changes:
+
+```sh
+cd ~/src/buddygotchi
+internal/tools/.venv/bin/python ~/src/boop-website/scripts/capture-boop.py /tmp/boop-frames
+~/src/boop-website/scripts/capture-boop.sh /tmp/boop-frames
+```
+
+The menu-bar popover comes from buddygotchi's
+`internal/tools/mediagen/mediagen.py --out DIR popover` (the right-hand pane).
+The mood faces on the page must be faces the pack still draws: check
+`mediagen.MOODS`.
 
 **The hero film slot.** The hero shows the screen capture `boop-day.mp4` until
 real footage exists. To replace it, add both of these files and deploy. No code

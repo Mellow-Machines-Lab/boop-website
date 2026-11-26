@@ -1,6 +1,6 @@
 import { copy } from "@/lib/copy";
 import { linkClass } from "@/lib/ui";
-import { Section } from "@/components/Section";
+import { Section, SectionHeading } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { serializeJsonLd } from "@/lib/jsonld";
 
@@ -20,9 +20,10 @@ export function Faq() {
   };
 
   return (
-    <Section id="S6" label="Questions" band>
+    <Section id="S6" label={copy.faqHeading} band>
       <Reveal>
-        <dl className="mx-auto grid max-w-4xl gap-x-12 gap-y-9 md:grid-cols-2">
+        <SectionHeading>{copy.faqHeading}</SectionHeading>
+        <dl className="mt-10 grid gap-x-14 gap-y-9 md:grid-cols-2">
           {copy.faq.map((item) => (
             <div key={item.q}>
               <dt className="font-display text-xl font-semibold">{item.q}</dt>

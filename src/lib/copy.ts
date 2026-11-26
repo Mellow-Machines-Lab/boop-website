@@ -71,21 +71,21 @@ export const copy = {
         media: "moment-celebrates",
         title: "It celebrates a finish that earns it.",
         voice: "a big finish. it did none of the work and it has never been prouder.",
-        alt: "Boop beaming under a trophy, with the finished thread named below it",
+        alt: "Boop beaming inside a green rim under a trophy, with the finished thread named below it",
       },
       {
         id: "grumbles",
-        media: "mood-grumpy",
+        media: "moment-grumbles",
         title: "It grumbles at a failed test. Never at you.",
         voice: "it saw the test fail. it is choosing to be brave about it.",
-        alt: "Boop with a small frown and slanted brows",
+        alt: "Boop frowning inside a red rim, with the failed thread named below it",
       },
       {
         id: "dreams",
-        media: "mood-tired",
+        media: "moment-sleepy",
         title: "It gets sleepy at night, and dreams about your day.",
         voice: "it will tell you the dream when you come back. it was mostly about tests.",
-        alt: "Boop with heavy eyelids and a small yawn",
+        alt: "Boop with heavy eyelids, then asleep",
       },
     ],
   },
@@ -109,8 +109,8 @@ export const copy = {
     watchOnly:
       "Boop only watches. It never approves, denies or blocks anything an agent does.",
     popoverAlt:
-      "Boop's menu-bar popover on the Mac: a card says Codex is waiting for you, above a list of Claude Code and Codex sessions and what each one is doing",
-    popoverCaption: "The menu-bar popover on the Mac. Every session, and who is waiting.",
+      "Boop's menu-bar popover on the Mac: an amber card says Codex is asking for a yes or no, with a button to open it, above a list of Claude Code and Codex agents and what each one is doing",
+    popoverCaption: "The menu-bar popover on the Mac. Every agent, and who is waiting.",
   },
 
   moods: {
@@ -121,9 +121,9 @@ export const copy = {
       { id: "proud", label: "proud" },
       { id: "curious", label: "curious" },
       { id: "calm", label: "calm" },
+      { id: "focused", label: "focused" },
       { id: "grumpy", label: "grumpy" },
       { id: "sad", label: "sad" },
-      { id: "tired", label: "tired" },
       { id: "wounded", label: "wounded" },
     ],
     faceAltTemplate: "Boop's {mood} face",
@@ -135,7 +135,8 @@ export const copy = {
     body: "We make little desk pets for people who work with AI agents. The gel slime came first: overconfident, theatrical and easily wounded. More characters will follow when they are ready. We will not name one before it is.",
     open: "The software is free and open source, so you can also make a character of your own.",
     scribble: "not telling yet",
-    silhouetteAlt: "Outlines of desk pets that do not exist yet",
+    firstLabel: "no. 1: Boop",
+    silhouetteAlt: "A desk pet that does not exist yet",
   },
 
   offer: {
@@ -155,6 +156,8 @@ export const copy = {
       },
     ],
   },
+
+  faqHeading: "Questions",
 
   faq: [
     {
