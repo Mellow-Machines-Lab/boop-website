@@ -133,6 +133,24 @@ CLIPS = {
         (3500, finish(2, "fix-login", "proud", 2)),
         (9600, None),
     ],
+    # A wave from another Boop, somewhere in the world.
+    "moment-world": [
+        (0, state("idle", "calm", idle=1)),
+        (500, do(1, "react", sign="hi, friend!", reason="Boop got a wave", say={}, mood="happy", loops=1)),
+        (5200, None),
+    ],
+    # It asks you something, you tap an answer, and it keeps it. Days later
+    # it brings the answer up again.
+    "moment-remembers": [
+        (0, state("idle", "calm", idle=1)),
+        (400, do(1, "react", sign="fav snack?", ask={"q": "snack", "a": "cookie", "b": "pizza"}, say={},
+                 mood="curious", loops=1)),
+        (4200, {"t": "dbg.touch", "x": 190, "y": 385, "ms": 120}),
+        (4500, do(2, "react", sign="nom nom", reason="Boop will remember", say={}, mood="happy", loops=1)),
+        (8200, {**state("idle", "calm", idle=1), "when": ["morning"], "energy": "bright"}),
+        (8500, do(3, "react", sign="snack time?", say={}, mood="happy", loops=1)),
+        (12600, None),
+    ],
     # Sleepy at night: heavy lids, then it dozes off.
     "moment-sleepy": [
         (0, {**state("idle"), "when": ["night"], "energy": "tired"}),

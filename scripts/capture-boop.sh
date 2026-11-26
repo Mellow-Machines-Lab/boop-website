@@ -22,6 +22,8 @@ encode moment-needs-you 0040
 encode moment-celebrates 0030
 encode moment-grumbles 0040
 encode moment-pet 0060
+encode moment-world 0020
+encode moment-remembers 0030
 encode moment-sign 0070
 encode moment-sleepy 0030
 for clip in "$frames"/mood-*/; do encode "$(basename "$clip")" 0020; done

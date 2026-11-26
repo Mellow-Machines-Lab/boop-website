@@ -88,11 +88,11 @@ export const copy = {
         alt: "Boop frowning inside a red rim, with the failed work named below",
       },
       {
-        id: "pet",
-        media: "moment-pet",
-        title: "Asks for a pet.",
-        body: "Stroke the screen and it purrs. Leave it waiting and it sulks.",
-        alt: "Boop leans in with a spot marked pet, then squints happily with hearts as it is stroked",
+        id: "world",
+        media: "moment-world",
+        title: "Has friends.",
+        body: "Other Boops around the world can wave at yours. You can turn that off.",
+        alt: "Boop smiles and holds up a sign that says hi, friend, with a note that it got a wave",
       },
       {
         id: "sleepy",
@@ -120,8 +120,11 @@ export const copy = {
   },
 
   moods: {
-    heading: "It has moods, and they last.",
-    body: "A good day makes it proud. A string of failed tests makes it cross, and it stays cross for a while. There is no reset button.",
+    heading: "It has moods, and it remembers.",
+    body: "A good day makes it proud, and a run of failed tests makes it cross for a while. It also keeps what you tell it, and brings it up days later. There is no reset button.",
+    memoryCaption: "Tell it your favourite snack once. It will not forget.",
+    memoryAlt:
+      "Boop holds up a sign asking fav snack, with cookie and pizza to tap. After an answer it says nom nom and notes that it will remember. Later it holds up a sign that says snack time",
     faces: [
       { id: "excited", label: "excited" },
       { id: "proud", label: "proud" },
