@@ -127,8 +127,11 @@ Vercel deploys `main` to production, and every other branch gets a preview.
 4. Enable Web Analytics. Use Node.js 24.x.
 5. Optional: `RESEND_API_KEY`, `NEXT_PUBLIC_TIKTOK_PIXEL_ID`, `RATE_LIMIT_SALT`.
 
-## Before launch
+## Email
 
-- `hello@adoptaboop.com` must be a working inbox. It is the contact link and
-  the reply-to address of the confirmation email.
-- The Resend sending domain must be verified.
+- `hello@adoptaboop.com` forwards to the team inbox through ImprovMX. It is the
+  contact link and the reply-to address of the confirmation email.
+- Resend sends from `adoptaboop.com`. Its `send` MX and SPF records must stay
+  in DNS when other mail records change.
+- `vercel env pull` hides `RESEND_API_KEY`, so `npm run email:test` needs the
+  key from the Resend dashboard.

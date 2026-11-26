@@ -21,8 +21,8 @@ const template = WAITLIST_CONFIRMATION_TEMPLATE;
   images and no tracking pixel: deliverability and the privacy page both
   depend on that staying true.
 
-  LAUNCH BLOCKER: hello@adoptaboop.com (the from and reply-to address) is not
-  a working inbox yet, and the sending domain must be verified in Resend.
+  Replies go to hello@adoptaboop.com, which forwards to the team inbox. The
+  sending domain is verified in Resend (the `send` MX and SPF records).
 */
 const SITE_URL = "https://adoptaboop.com";
 

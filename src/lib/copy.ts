@@ -202,8 +202,7 @@ export const copy = {
     help: "help",
     privacy: "privacy",
     contact: "contact",
-    // LAUNCH BLOCKER: hello@adoptaboop.com is not a working inbox yet. Set it
-    // up (and the Resend sending domain) before this page gets real traffic.
+    // hello@adoptaboop.com forwards to the team inbox (ImprovMX, set up 2026-11-25).
     contactEmail: "hello@adoptaboop.com",
     copyright: "© 2026 Mellow Machines Lab",
   },

@@ -37,7 +37,10 @@ if (!url) {
 
 const sql = neon(url);
 const schema = readFileSync(new URL("../db/schema.sql", import.meta.url), "utf8");
+// Drop `--` comments before splitting, so a semicolon inside a comment can't
+// cut a statement in two.
 const statements = schema
+  .replace(/--.*$/gm, "")
   .split(";")
   .map((s) => s.trim())
   .filter(Boolean);

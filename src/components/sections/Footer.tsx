@@ -51,7 +51,6 @@ export function Footer() {
             <Link href="/privacy" className="hover:text-ink">
               {copy.footer.privacy}
             </Link>
-            {/* LAUNCH BLOCKER: this inbox must exist before launch (see copy.ts). */}
             <a href={`mailto:${copy.footer.contactEmail}`} className="hover:text-ink">
               {copy.footer.contact}
             </a>
