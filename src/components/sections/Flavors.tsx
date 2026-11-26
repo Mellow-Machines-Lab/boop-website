@@ -6,7 +6,7 @@ import { Reveal } from "@/components/Reveal";
 import { MysteryPet } from "@/components/Doodle";
 
 /*
-  S5: more flavors coming, then what a ready-made Boop is. The company makes
+  S5: more characters coming, then what you get. The company makes
   desk pets; Boop is the first. Nothing here names or promises a character.
 */
 export function Flavors() {
@@ -16,7 +16,6 @@ export function Flavors() {
         <Reveal>
           <SectionHeading>{copy.flavors.heading}</SectionHeading>
           <p className="mt-4 text-lg leading-relaxed text-ink-soft">{copy.flavors.body}</p>
-          <p className="mt-4 leading-relaxed text-ink-soft">{copy.flavors.open}</p>
         </Reveal>
         <Reveal>
           <div className="mx-auto max-w-md">
@@ -48,7 +47,7 @@ export function Flavors() {
 
       <Reveal>
         <h2 className="mt-20 text-2xl font-semibold md:mt-28">{copy.offer.heading}</h2>
-        <ul className="mt-6 grid gap-6 md:grid-cols-3">
+        <ul className="mt-6 grid gap-6 md:grid-cols-2">
           {copy.offer.items.map((item) => (
             <li key={item.title} className="rounded-3xl bg-white/70 p-6">
               <h3 className="text-xl font-semibold leading-snug">{item.title}</h3>

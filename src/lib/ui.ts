@@ -13,9 +13,6 @@ export const inputClass =
   "w-full min-w-0 flex-1 rounded-full border-2 border-ink/15 bg-white px-6 py-3.5 " +
   "text-ink placeholder:text-ink-soft/70 focus-visible:border-slime-deep";
 
-/* Boop's own voice: lower case and monospaced, like the strip on its screen. */
-export const voiceClass = "font-mono text-[0.9rem] leading-relaxed text-ink-soft";
-
 /* A scribbled label. Use sparingly: twice or three times on a page. */
 export const scribbleClass = "font-hand text-2xl leading-tight text-slime-deep";
 

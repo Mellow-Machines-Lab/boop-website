@@ -1,6 +1,6 @@
 import { Hero } from "@/components/sections/Hero";
 import { Day } from "@/components/sections/Day";
-import { How } from "@/components/sections/How";
+import { Mac } from "@/components/sections/Mac";
 import { Moods } from "@/components/sections/Moods";
 import { Flavors } from "@/components/sections/Flavors";
 import { Faq } from "@/components/sections/Faq";
@@ -12,7 +12,7 @@ export default function Page() {
     <main>
       <Hero />
       <Day />
-      <How />
+      <Mac />
       <Moods />
       <Flavors />
       <Faq />

@@ -55,7 +55,7 @@ test("a filled honeypot looks like success and stores nothing", async ({ request
 test("the page says nothing the product does not do", async ({ page }) => {
   await page.goto("/");
   const text = (await page.locator("main").innerText()).toLowerCase();
-  for (const gone of ["approve with a pet", "founding litter", "pre-order", "cursor", "light strip"]) {
+  for (const gone of ["approve with a pet", "founding litter", "pre-order", "cursor", "light strip", "a brain that works alone"]) {
     expect(text).not.toContain(gone);
   }
   expect(text).toContain("it never approves, denies or blocks anything");

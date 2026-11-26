@@ -1,31 +1,31 @@
 import { copy } from "@/lib/copy";
-import { scribbleClass } from "@/lib/ui";
 import { Section, SectionHeading } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { BoardScreen } from "@/components/BoardScreen";
 
-/* S4: moods. Eight of its real faces, captured from the screen. */
+/* S4: moods, kept small. A line of text and one row of its real faces. */
 export function Moods() {
   return (
-    <Section id="S4" label={copy.moods.heading} band>
+    <Section id="S4" label={copy.moods.heading} band className="!py-12 md:!py-16">
       <Reveal>
-        <SectionHeading>{copy.moods.heading}</SectionHeading>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">{copy.moods.body}</p>
-      </Reveal>
-      <Reveal>
-        <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 md:gap-x-6">
-          {copy.moods.faces.map((face) => (
-            <li key={face.id}>
-              <BoardScreen
-                name={`mood-${face.id}`}
-                alt={copy.moods.faceAltTemplate.replace("{mood}", face.label)}
-                className="!rounded-[1.25rem] !p-1.5"
-              />
-              <p className="mt-2 text-center font-mono text-sm text-ink-soft">{face.label}</p>
-            </li>
-          ))}
-        </ul>
-        <p className={`${scribbleClass} mt-8 -rotate-1 text-center`}>{copy.moods.scribble}</p>
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-12">
+          <div>
+            <SectionHeading>{copy.moods.heading}</SectionHeading>
+            <p className="mt-3 leading-relaxed text-ink-soft">{copy.moods.body}</p>
+          </div>
+          <ul className="grid grid-cols-4 gap-x-2.5 gap-y-4 sm:gap-x-4">
+            {copy.moods.faces.map((face) => (
+              <li key={face.id} className="min-w-0">
+                <BoardScreen
+                  name={`mood-${face.id}`}
+                  alt={copy.moods.faceAltTemplate.replace("{mood}", face.label)}
+                  className="!rounded-[0.9rem] !p-1 !shadow-none"
+                />
+                <p className="mt-1.5 text-center font-mono text-xs text-ink-soft">{face.label}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Reveal>
     </Section>
   );

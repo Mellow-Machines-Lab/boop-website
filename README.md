@@ -50,7 +50,7 @@ still succeeds.
 | Path | What it is |
 | --- | --- |
 | `src/lib/copy.ts` | Every word a visitor reads. `tests/copy-rules.test.mjs` checks it |
-| `src/components/sections/` | The home page, top to bottom: Hero, Day, How, Moods, Flavors, Faq, Footer |
+| `src/components/sections/` | The home page, top to bottom: Hero, Day, Mac, Moods, Flavors, Faq, Footer |
 | `src/app/welcome/` | The page after a signup, with two optional questions |
 | `src/app/api/waitlist/` | The signup API, and `answer/` for the optional questions |
 | `src/lib/attribution.ts` | First-touch UTM capture |
@@ -76,7 +76,7 @@ native simulator, which runs the firmware's own drawing on the Mac. To make
 them again after the character changes:
 
 ```sh
-cd ~/src/buddygotchi
+cd ~/src/buddygotchi   # a checkout at the latest main, with its simulator built
 internal/tools/.venv/bin/python ~/src/boop-website/scripts/capture-boop.py /tmp/boop-frames
 ~/src/boop-website/scripts/capture-boop.sh /tmp/boop-frames
 ```

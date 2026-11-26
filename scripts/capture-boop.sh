@@ -15,19 +15,23 @@ encode() { # clip poster-frame
   cwebp -quiet -q 90 "$frames/$1/$2.png" -o "$media/$1.webp"
 }
 
-encode moment-naps 0010
-encode moment-works 0020
+encode moment-hello 0030
+encode moment-works 0045
+encode moment-agents 0040
 encode moment-needs-you 0040
 encode moment-celebrates 0030
 encode moment-grumbles 0040
+encode moment-pet 0060
+encode moment-sign 0070
 encode moment-sleepy 0030
 for clip in "$frames"/mood-*/; do encode "$(basename "$clip")" 0020; done
 
-# The hero: needs you, a big finish, a nap, back to work.
+# The hero: good morning, a stroke, then what the agent finished.
 list=$(mktemp)
-for clip in moment-needs-you moment-celebrates moment-naps moment-works; do
+for clip in moment-hello moment-pet moment-sign; do
   echo "file '$media/$clip.mp4'" >> "$list"
 done
 ffmpeg -v error -y -f concat -safe 0 -i "$list" -c copy -movflags +faststart "$media/boop-day.mp4"
-cp "$media/moment-needs-you.webp" "$media/boop-day.webp"
-rm -f "$list"
+cp "$media/moment-hello.webp" "$media/boop-day.webp"
+# moment-sign is only used inside the hero loop.
+rm -f "$list" "$media/moment-sign.mp4" "$media/moment-sign.webp"

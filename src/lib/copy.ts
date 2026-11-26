@@ -6,7 +6,7 @@
   Copy rules (enforced by tests/copy-rules.test.mjs):
     - No hype words and no exclamation marks.
     - No em dashes. Use commas, colons or full stops.
-    - Sentence case. Boop's own captions are lower case, like its screen.
+    - Sentence case. Short, plain sentences that say what Boop does.
     - An adult desk gadget for developers. A waitlist with no ship date.
     - Boop only watches. It never decides anything for an agent.
 */
@@ -15,9 +15,9 @@ export const REPO_URL = "https://github.com/Mellow-Machines-Lab/buddygotchi";
 
 export const copy = {
   meta: {
-    title: "Boop, a little desk pet that watches your AI agents",
+    title: "Boop, the desk pet that watches your AI agents",
     description:
-      "Boop is a gel slime on a small screen beside your Mac. It naps while nothing runs, works along with Claude Code and Codex, and knocks when one of them needs you. Free, open-source software. Join the waitlist for a ready-made one.",
+      "Boop is a little gel slime on a screen beside your Mac. It says good morning, works along with Claude Code and Codex, and tells you when one finishes or needs you. Join the waitlist for a ready-made one.",
     ogAlt: "Boop, a glossy blue gel slime with a closed-eye smile, on a peach background",
   },
 
@@ -28,94 +28,100 @@ export const copy = {
   },
 
   hero: {
-    headline: "A little desk pet that keeps an eye on your AI agents.",
+    headline: "Meet Boop, the desk pet that watches your AI agents.",
     subhead:
-      "Boop is a gel slime that lives on a small screen beside your Mac. It naps while nothing runs, works along while your agents work, and knocks when one of them needs you.",
+      "Boop lives on a little screen beside your Mac. It says good morning, keeps Claude Code and Codex company while they work, and shows you what they finished.",
     ctaLabel: "Join the waitlist",
     placeholder: "you@where-you-code.com",
-    small: "One email when a ready-made Boop is available. No date yet, and no spam.",
+    small: "Be first to know when you can get one. One email, no spam.",
     scribble: "the real screen, watch-face sized",
     screenAlt:
-      "Boop's real screen: the blue gel slime under an amber sign that says an agent needs you, then celebrating a finish, napping, and typing along at its tiny desk",
+      "Boop's real screen: the blue gel slime wakes up and greets you, leans in for a stroke and purrs, then types along with an agent and holds up a sign with the name of the work it finished",
     filmAlt: "Boop on a desk beside a Mac",
   },
 
   day: {
     heading: "A day with Boop",
-    intro: "These are captures of the real screen. The captions are Boop's own view of events.",
+    intro: "Every clip is Boop's real screen.",
     moments: [
       {
-        id: "naps",
-        media: "moment-naps",
-        title: "It naps while no agent is open.",
-        voice: "nothing is running. it would like you to know that was its idea.",
-        alt: "Boop asleep on a dark screen, eyes closed",
+        id: "hello",
+        media: "moment-hello",
+        title: "Says good morning.",
+        body: "Sit down at your desk and Boop wakes up, glad you came back.",
+        alt: "Boop wakes up and smiles, with a note that you were away ten hours",
       },
       {
         id: "works",
         media: "moment-works",
-        title: "It works along while your agents work.",
-        voice: "claude is typing, so it is typing. it expects to be credited.",
-        alt: "Boop at a tiny desk with a monitor and keyboard, typing along",
+        title: "Shows what your agent is doing.",
+        body: "Reading, searching, editing, running the tests. The current step is always under its face.",
+        alt: "Boop at a tiny desk, typing, while the line under it changes from reading to searching to editing to running the tests",
+      },
+      {
+        id: "agents",
+        media: "moment-agents",
+        title: "Keeps track of all of them.",
+        body: "Each agent gets its own colour. Swipe to follow a different one.",
+        alt: "Three coloured marks under Boop, one for each agent, and a pill that says the settings agent finished",
       },
       {
         id: "needs-you",
         media: "moment-needs-you",
-        title: "It lights up amber and knocks when one needs you.",
-        voice: "claude is waiting on you. it will keep knocking. it has all day.",
-        alt: "An amber sign over Boop reads: needs you, continue on your Mac. Below it, the agent and project are named",
+        title: "Knocks when one needs you.",
+        body: "The screen turns amber and names the agent that is waiting, so you can stop checking terminals.",
+        alt: "An amber sign over Boop says needs you, a yes or no, and names the agent and project",
         amber: true,
       },
       {
         id: "celebrates",
         media: "moment-celebrates",
-        title: "It celebrates a finish that earns it.",
-        voice: "a big finish. it did none of the work and it has never been prouder.",
-        alt: "Boop beaming inside a green rim under a trophy, with the finished thread named below it",
+        title: "Celebrates the big finishes.",
+        body: "A quick fix gets a small hop. A long job that finally passes gets the gold treatment.",
+        alt: "Gold rays and confetti behind a beaming Boop under a trophy, with the finished work named below",
       },
       {
         id: "grumbles",
         media: "moment-grumbles",
-        title: "It grumbles at a failed test. Never at you.",
-        voice: "it saw the test fail. it is choosing to be brave about it.",
-        alt: "Boop frowning inside a red rim, with the failed thread named below it",
+        title: "Takes failed tests personally.",
+        body: "It grumbles at the test. Never at you.",
+        alt: "Boop frowning inside a red rim, with the failed work named below",
       },
       {
-        id: "dreams",
+        id: "pet",
+        media: "moment-pet",
+        title: "Asks for a pet.",
+        body: "Stroke the screen and it purrs. Leave it waiting and it sulks.",
+        alt: "Boop leans in with a spot marked pet, then squints happily with hearts as it is stroked",
+      },
+      {
+        id: "sleepy",
         media: "moment-sleepy",
-        title: "It gets sleepy at night, and dreams about your day.",
-        voice: "it will tell you the dream when you come back. it was mostly about tests.",
+        title: "Gets sleepy at night.",
+        body: "It dozes off, dreams about your day, and tells you about it in the morning.",
         alt: "Boop with heavy eyelids, then asleep",
       },
     ],
   },
 
-  how: {
-    heading: "How it works",
-    steps: [
-      {
-        title: "The Mac app watches your agents.",
-        body: "A menu-bar app listens to hooks from Claude Code and Codex. The hooks only report what is happening. If Boop is not running, your agents carry on as normal.",
-      },
-      {
-        title: "The board shows you.",
-        body: "A 2.06 inch AMOLED touch screen on an ESP32 board. It plugs into USB-C for power and talks to your Mac over Bluetooth or USB.",
-      },
-      {
-        title: "Tap or press to jump.",
-        body: "Under its face, Boop counts who is done. Press its button and your Mac opens the agent that needs you first, then the one that finished last. Tap its face and it pokes back.",
-      },
+  mac: {
+    heading: "On your Mac, every agent at a glance.",
+    body: "Boop comes with a menu-bar app. It lists every Claude Code and Codex session, what each one is doing, and which ones are waiting for you. Press the button on Boop and your Mac opens the agent that needs you.",
+    facts: [
+      { label: "Works with", value: "Claude Code and Codex" },
+      { label: "Screen", value: "2.06 inch AMOLED touch screen" },
+      { label: "Power", value: "USB-C, always plugged in" },
+      { label: "Connects over", value: "Bluetooth or USB" },
     ],
-    watchOnly:
-      "Boop only watches. It never approves, denies or blocks anything an agent does.",
+    watchOnly: "Boop only watches. It never approves, denies or blocks anything an agent does.",
     popoverAlt:
       "Boop's menu-bar popover on the Mac: an amber card says Codex is asking for a yes or no, with a button to open it, above a list of Claude Code and Codex agents and what each one is doing",
-    popoverCaption: "The menu-bar popover on the Mac. Every agent, and who is waiting.",
+    popoverCaption: "The menu-bar app. Yes, that is Boop in the corner.",
   },
 
   moods: {
-    heading: "It has feelings, and it remembers.",
-    body: "Boop has lasting moods: calm, happy, focused, proud, cross, sad and lonely. A rough afternoon leaves it cross for a while. A kind word helps. There is no reset button.",
+    heading: "It has moods, and they last.",
+    body: "A good day makes it proud. A string of failed tests makes it cross, and it stays cross for a while. There is no reset button.",
     faces: [
       { id: "excited", label: "excited" },
       { id: "proud", label: "proud" },
@@ -127,32 +133,26 @@ export const copy = {
       { id: "wounded", label: "wounded" },
     ],
     faceAltTemplate: "Boop's {mood} face",
-    scribble: "easily wounded. always on your side.",
   },
 
   flavors: {
     heading: "Boop is the first.",
-    body: "We make little desk pets for people who work with AI agents. The gel slime came first: overconfident, theatrical and easily wounded. More characters will follow when they are ready. We will not name one before it is.",
-    open: "The software is free and open source, so you can also make a character of your own.",
+    body: "We make little desk pets for people who work with AI agents. Boop, the gel slime, came first: overconfident, theatrical, easily wounded, and always on your side. More characters are on the way.",
     scribble: "not telling yet",
     firstLabel: "no. 1: Boop",
     silhouetteAlt: "A desk pet that does not exist yet",
   },
 
   offer: {
-    heading: "What you would get",
+    heading: "What you get",
     items: [
       {
         title: "A ready-made Boop",
-        body: "A flashed board in a shell. Plug it into USB-C, open the Mac app, and it finds its body.",
+        body: "The board, set up and in its shell. Plug in USB-C, open the Mac app, and say hello.",
       },
       {
-        title: "No subscription, no account",
-        body: "The software is free and stays MIT licensed. You pay once for the hardware and nothing after.",
-      },
-      {
-        title: "A brain that works alone",
-        body: "Boop's own rules pick its reactions on your Mac. A small hosted model called Jev can pick them instead if you add a key. Nothing is required.",
+        title: "Yours to keep, and to hack",
+        body: "Pay once. There is no subscription and no account, and the software is free and open source.",
       },
     ],
   },
@@ -161,35 +161,35 @@ export const copy = {
 
   faq: [
     {
-      q: "Is it a subscription?",
-      a: "No. There is no subscription and no account. The software is free and open source.",
+      q: "When can I get one?",
+      a: "There is no date yet, and we will not promise one we might miss. Join the waitlist and you get one email when ready-made Boops are available.",
     },
     {
-      q: "Does it touch my code?",
-      a: "No. It sees activity, not source: that a test ran, that an agent is waiting. Your code, files, commands and prompts stay on your Mac. Boop can share its name and a few counts with other Boops in a weekly league, and you can turn that off.",
+      q: "Is there a subscription?",
+      a: "No. You pay once for the hardware. The software is free.",
+    },
+    {
+      q: "Does it see my code?",
+      a: "No. Boop sees activity, not source: a test ran, an agent is waiting. Your code, files, commands and prompts stay on your Mac. Boop can share its name and a few counts with other Boops in a weekly league, and you can turn that off.",
     },
     {
       q: "Does it approve things for me?",
-      a: "No. It only watches. When an agent needs your approval, Boop tells you which one, and you answer on your Mac as usual.",
+      a: "No. Boop only watches. When an agent needs your approval, Boop tells you which one, and you answer on your Mac as usual.",
     },
     {
-      q: "Mac only?",
-      a: "For now. It needs macOS 14 or later, and it works with Claude Code and Codex.",
+      q: "What do I need?",
+      a: "A Mac with macOS 14 or later, and Claude Code or Codex.",
     },
     {
       q: "Can I build my own?",
       a: "Yes. The software is open source under the MIT licence. Buy the board, clone the repository and run make flash.",
       link: { label: "The repository on GitHub", url: REPO_URL },
     },
-    {
-      q: "When does it ship?",
-      a: "There is no date yet, and we will not promise one we might miss. Join the waitlist and you get one email when a ready-made Boop is available.",
-    },
   ],
 
   footer: {
     heading: "Want one on your desk?",
-    body: "Leave your email. You get one message when a ready-made Boop is available.",
+    body: "Join the waitlist and be first to know when you can get one.",
     ctaLabel: "Join the waitlist",
     placeholder: "you@where-you-code.com",
     // Rendered only when url is non-empty.

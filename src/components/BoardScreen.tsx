@@ -48,13 +48,13 @@ export function BoardScreen({
 
   return (
     <div
-      className={`rounded-[1.75rem] bg-bezel p-2.5 shadow-[0_18px_40px_-12px_rgb(11_42_74/0.45)] ${
+      className={`min-w-0 rounded-[1.75rem] bg-bezel p-2.5 shadow-[0_18px_40px_-12px_rgb(11_42_74/0.45)] ${
         needsYou ? "needs-you" : ""
       } ${className}`}
     >
       <video
         ref={ref}
-        className="block aspect-[502/410] w-full rounded-[1.15rem] bg-screen"
+        className="block aspect-[502/410] w-full rounded-[inherit] bg-screen"
         poster={`/media/${name}.webp`}
         width={502}
         height={410}
