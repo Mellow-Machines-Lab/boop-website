@@ -1,25 +1,20 @@
 import { Hero } from "@/components/sections/Hero";
-import { Moment } from "@/components/sections/Moment";
-import { Alive } from "@/components/sections/Alive";
-import { LightLanguage } from "@/components/sections/LightLanguage";
-import { RationalFloor } from "@/components/sections/RationalFloor";
-import { Adoption } from "@/components/sections/Adoption";
+import { Day } from "@/components/sections/Day";
+import { How } from "@/components/sections/How";
+import { Moods } from "@/components/sections/Moods";
+import { Flavors } from "@/components/sections/Flavors";
 import { Faq } from "@/components/sections/Faq";
 import { Footer } from "@/components/sections/Footer";
 
-/*
-  One page, no nav, no header — nothing to do but scroll and one thing to click.
-  Sections S1–S8 in order (SPEC.md §5).
-*/
+/* One page with one job: get an email onto the waitlist. */
 export default function Page() {
   return (
     <main>
       <Hero />
-      <Moment />
-      <Alive />
-      <LightLanguage />
-      <RationalFloor />
-      <Adoption />
+      <Day />
+      <How />
+      <Moods />
+      <Flavors />
       <Faq />
       <Footer />
     </main>

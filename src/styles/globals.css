@@ -1,24 +1,29 @@
 @import "tailwindcss";
 
 /*
-  Design tokens = the physical product's palette (cream shell, warm charcoal,
-  amber attention glow). See SPEC.md §4.1. No pure white, no pure black.
+  Design tokens come from the real character: the gel slime's glossy blue, the
+  warm peach of its avatar background, the navy of its face, and black for the
+  AMOLED screen. Amber means one thing only: an agent needs you.
 */
 @theme {
-  --color-cream: #f7f2e9;
-  --color-cream-deep: #efe7d8;
-  --color-charcoal: #2b2724;
-  --color-charcoal-soft: #6e675d;
-  --color-amber: #e8a33d;
-  --color-amber-deep: #c9862b;
-  --color-green: #7fa96b;
-  --color-night: #1b1714;
-  --color-night-text: #efe7d8;
+  --color-peach: #fff1e4;
+  --color-peach-deep: #fde0d5;
+  --color-ink: #0b2a4a;
+  --color-ink-soft: #4b6078;
+  --color-slime: #2e8eea;
+  --color-slime-deep: #1a66bd;
+  --color-slime-pale: #d6eaff;
+  --color-amber: #f4b13e;
+  --color-screen: #000000;
+  --color-bezel: #10151c;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-display), ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  --font-hand: var(--font-hand), "Bradley Hand", cursive;
 
-  /* Motion: eased, damped, never bouncy. Same physics as the blob's wobble. */
-  --ease-buddy: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Motion: eased and damped, like the gel settling. */
+  --ease-gel: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
@@ -27,206 +32,68 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
-  background: var(--color-cream);
-  color: var(--color-charcoal);
+  background: var(--color-peach);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
-/* Focus ring: 2px amber, always visible, never removed. */
+/* Focus ring: always visible, in the slime's blue. */
 :focus-visible {
-  outline: 2px solid var(--color-amber);
+  outline: 2px solid var(--color-slime-deep);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-/* Scroll reveal — fade up, no overshoot. Applied by the <Reveal> component. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+/* Scroll reveal: fade up once, no overshoot. Applied by <Reveal>. */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
   transition:
-    opacity 0.7s var(--ease-buddy),
-    transform 0.7s var(--ease-buddy);
-  will-change: opacity, transform;
+    opacity 0.6s var(--ease-gel),
+    transform 0.6s var(--ease-gel);
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
-
-/* Slow "breathing" glow used on media placeholders and the light-language strip. */
-@keyframes buddy-breathe {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.04);
-  }
-}
-.buddy-breathe {
-  animation: buddy-breathe 4s var(--ease-buddy) infinite;
-}
-.buddy-amber {
-  animation: buddy-amber 2.4s var(--ease-buddy) infinite;
-}
-.buddy-heartbeat {
-  animation: buddy-heartbeat 2.6s var(--ease-buddy) infinite;
-}
-
-/* Amber attention pulse for the "needs you" state. */
-@keyframes buddy-amber {
-  0%,
-  100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Red heartbeat for the "stuck" state — low duty cycle, concern not alarm. */
-@keyframes buddy-heartbeat {
-  0%,
-  60%,
-  100% {
-    opacity: 0.25;
-  }
-  15%,
-  30% {
-    opacity: 0.7;
-  }
-}
-
-/* The boop: 2–3 damped rocks, then a long stillness. Physical, never a metronome. */
-@keyframes buddy-wobble {
-  0%,
-  46%,
-  100% {
-    transform: rotate(0deg);
-  }
-  6% {
-    transform: rotate(8deg);
-  }
-  15% {
-    transform: rotate(-6deg);
-  }
-  24% {
-    transform: rotate(3.5deg);
-  }
-  32% {
-    transform: rotate(-1.5deg);
-  }
-  40% {
-    transform: rotate(0.5deg);
-  }
-}
-.buddy-wobble {
-  animation: buddy-wobble 5.5s var(--ease-buddy) infinite;
-}
-
-/* The sleep peek: one eye opens briefly, then dozes back off. */
-@keyframes buddy-peek-in {
-  0%,
-  70%,
-  94%,
-  100% {
-    opacity: 0;
-  }
-  76%,
-  88% {
-    opacity: 1;
-  }
-}
-@keyframes buddy-peek-out {
-  0%,
-  70%,
-  94%,
-  100% {
-    opacity: 1;
-  }
-  76%,
-  88% {
-    opacity: 0;
-  }
-}
-.buddy-peek-in {
-  animation: buddy-peek-in 8s linear infinite;
-}
-.buddy-peek-out {
-  animation: buddy-peek-out 8s linear infinite;
-}
-
-/* The pet: a hand strokes the crown — slow, damped, affectionate. */
-@keyframes buddy-pet {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(4px);
-  }
-}
-.buddy-pet {
-  animation: buddy-pet 2.8s var(--ease-buddy) infinite;
-}
-
-/* Gentle float/fade for confetti dots and sleep z's. Staggered via delay. */
-@keyframes buddy-twinkle {
-  0%,
-  100% {
-    opacity: 0.15;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0.9;
-    transform: translateY(-4px);
-  }
-}
-.buddy-twinkle {
-  animation: buddy-twinkle 3.2s var(--ease-buddy) infinite;
-}
-
-/* Egg crack-and-peek on the /welcome page. */
-@keyframes egg-peek {
-  0%,
-  70% {
-    transform: translateY(0) rotate(0deg);
-  }
-  80% {
-    transform: translateY(-2px) rotate(-2deg);
-  }
-  90% {
-    transform: translateY(0) rotate(2deg);
-  }
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-}
-
-/* The <dialog> waitlist modal. */
-dialog::backdrop {
-  background: rgb(27 23 20 / 0.45);
-  backdrop-filter: blur(2px);
-}
-dialog[open] {
-  animation: dialog-in 0.4s var(--ease-buddy);
-}
-@keyframes dialog-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
+/* Without JavaScript nothing would ever add .is-visible. */
+@media (scripting: none) {
+  .reveal {
     opacity: 1;
     transform: none;
   }
+}
+
+/* The amber "needs you" halo around a screen. The only amber on the page. */
+@keyframes needs-you {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgb(244 177 62 / 0.9),
+      0 0 28px 2px rgb(244 177 62 / 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgb(244 177 62 / 0.9),
+      0 0 44px 8px rgb(244 177 62 / 0.5);
+  }
+}
+.needs-you {
+  animation: needs-you 2.4s var(--ease-gel) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -238,15 +105,8 @@ dialog[open] {
     transform: none;
     transition: none;
   }
-  .buddy-breathe,
-  .buddy-amber,
-  .buddy-heartbeat,
-  .buddy-wobble,
-  .buddy-peek-in,
-  .buddy-peek-out,
-  .buddy-pet,
-  .buddy-twinkle,
-  dialog[open] {
+  .needs-you {
     animation: none;
+    box-shadow: 0 0 0 3px rgb(244 177 62 / 0.9);
   }
 }

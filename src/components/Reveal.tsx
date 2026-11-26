@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 /*
   Fade-up on scroll, once. Damped, no overshoot (CSS in globals.css). Lets the
-  section components stay server components — only this wrapper is client.
+  section components stay server components: only this wrapper is client.
 */
 export function Reveal({
   children,

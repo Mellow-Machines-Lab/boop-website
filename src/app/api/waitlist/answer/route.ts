@@ -1,33 +1,30 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { isBackendReady, saveExpectation } from "@/lib/waitlist";
+import { rateLimited } from "@/lib/rate-limit";
+import { isBackendReady, saveAnswer } from "@/lib/waitlist";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+/*
+  Saves one optional /welcome answer on the signup row that owns `code`:
+    - video_source: "Which video brought you here?" Free text or a link. While
+      the TikTok bio link is not clickable, this is the only way to tell which
+      videos drive signups.
+    - price_expectation: what a ready-made Boop should cost.
+*/
 const Body = z.object({
   code: z.string().trim().min(1).max(32),
-  answer: z.string().trim().min(1).max(64),
+  field: z.enum(["video_source", "price_expectation"]),
+  answer: z.string().trim().min(1).max(500),
 });
-
-// Naive per-IP limiter. Fine at demand-test traffic; resets on cold start and is
-// per-instance only — not a real DoS control, just an abuse speed bump.
-const hits = new Map<string, number[]>();
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < 60_000);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > 5;
-}
 
 export async function POST(req: Request) {
   if (!isBackendReady()) {
     return NextResponse.json({ error: "waitlist unavailable" }, { status: 503 });
   }
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  if (rateLimited(ip)) {
+  if (await rateLimited(req)) {
     return NextResponse.json({ error: "slow down" }, { status: 429 });
   }
 
@@ -44,10 +41,10 @@ export async function POST(req: Request) {
   }
 
   try {
-    await saveExpectation(parsed.data);
+    await saveAnswer(parsed.data);
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("waitlist expectation failed", err);
+    console.error("waitlist answer failed", err);
     return NextResponse.json({ error: "server error" }, { status: 500 });
   }
 }

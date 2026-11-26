@@ -1,11 +1,12 @@
 import { copy } from "@/lib/copy";
+import { linkClass } from "@/lib/ui";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { serializeJsonLd } from "@/lib/jsonld";
 
 /*
-  S7 — FAQ. Plain stacked text, no accordion (collapsing five lines is
-  disfluency for no gain). Ships FAQPage JSON-LD for the rendered questions.
+  S6: a short FAQ. Plain stacked text, with no accordion: six short answers
+  are quicker to read than to open. Ships FAQPage JSON-LD for the same text.
 */
 export function Faq() {
   const jsonLd = {
@@ -19,13 +20,24 @@ export function Faq() {
   };
 
   return (
-    <Section id="S7" label="Questions">
+    <Section id="S6" label="Questions" band>
       <Reveal>
-        <dl className="mx-auto flex max-w-2xl flex-col gap-8">
+        <dl className="mx-auto grid max-w-4xl gap-x-12 gap-y-9 md:grid-cols-2">
           {copy.faq.map((item) => (
             <div key={item.q}>
-              <dt className="font-semibold">{item.q}</dt>
-              <dd className="mt-1 text-charcoal-soft">{item.a}</dd>
+              <dt className="font-display text-xl font-semibold">{item.q}</dt>
+              <dd className="mt-1.5 leading-relaxed text-ink-soft">
+                {item.a}
+                {"link" in item && (
+                  <>
+                    {" "}
+                    <a href={item.link.url} className={linkClass}>
+                      {item.link.label}
+                    </a>
+                    .
+                  </>
+                )}
+              </dd>
             </div>
           ))}
         </dl>

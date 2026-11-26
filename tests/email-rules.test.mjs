@@ -57,14 +57,49 @@ test("waitlist confirmation renders clean text and minimal html", async () => {
   assert.ok(!rendered.text.includes("{{"), "text has leftover placeholder");
   assert.ok(!rendered.html.includes("{{"), "html has leftover placeholder");
   assert.ok(!/<img\b/i.test(rendered.html), "html must not include images");
-  assert.ok(rendered.text.startsWith("You're in line."), "text opens with the heading");
-  assert.ok(/<h1[^>]*>You're in line\.<\/h1>/.test(rendered.html), "html has the heading");
+  assert.ok(rendered.text.startsWith("You're on the list."), "text opens with the heading");
+  assert.ok(/<h1[^>]*>You're on the list\.<\/h1>/.test(rendered.html), "html has the heading");
   assert.ok(
-    rendered.html.includes('<span style="color:#c9862b;font-weight:600;">#42</span>'),
-    "html highlights the buddy number in amber",
+    rendered.html.includes('<a href="https://adoptaboop.com" style="color:#1a66bd;'),
+    "html links the sign-off domain",
   );
-  assert.ok(
-    rendered.html.includes('<a href="https://adoptaboop.com" style="color:#c9862b;'),
-    "html links the sign-off domain in amber",
-  );
+  assert.ok(!/founding litter|buddy #/i.test(rendered.text), "no retired lore in the email");
+});
+
+test("a missing RESEND_API_KEY skips the send and does not throw", async () => {
+  const { sendWaitlistConfirmation } = await import("../src/lib/email.ts");
+  const saved = process.env.RESEND_API_KEY;
+  delete process.env.RESEND_API_KEY;
+  const warn = console.warn;
+  const logged = [];
+  console.warn = (...args) => logged.push(args.join(" "));
+  try {
+    const result = await sendWaitlistConfirmation({ to: "someone@example.com", position: 1 });
+    assert.equal(result.status, "skipped");
+    assert.ok(logged.some((line) => line.includes("RESEND_API_KEY")), "the skip is logged");
+  } finally {
+    console.warn = warn;
+    if (saved !== undefined) process.env.RESEND_API_KEY = saved;
+  }
+});
+
+test("a failed send is reported, not thrown", async () => {
+  const { sendWaitlistConfirmation } = await import("../src/lib/email.ts");
+  const saved = process.env.RESEND_API_KEY;
+  const realFetch = globalThis.fetch;
+  const error = console.error;
+  process.env.RESEND_API_KEY = "test-key-not-real";
+  globalThis.fetch = async () => {
+    throw new Error("network down");
+  };
+  console.error = () => {};
+  try {
+    const result = await sendWaitlistConfirmation({ to: "someone@example.com", position: 1 });
+    assert.equal(result.status, "error");
+  } finally {
+    globalThis.fetch = realFetch;
+    console.error = error;
+    if (saved === undefined) delete process.env.RESEND_API_KEY;
+    else process.env.RESEND_API_KEY = saved;
+  }
 });

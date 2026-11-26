@@ -1,72 +1,61 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { copy } from "@/lib/copy";
+import { linkClass } from "@/lib/ui";
+import { DocHeading, DocPage, docList, docText } from "@/components/DocPage";
 
 export const metadata: Metadata = {
-  title: "Help — Boop",
+  title: copy.help.title,
   robots: { index: true, follow: true },
 };
 
+/* The basics only. The repository's README is the full, current guide. */
 export default function HelpPage() {
   const help = copy.help;
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24 md:py-32">
-      <h1 className="text-3xl font-semibold tracking-[-0.02em]">{help.heading}</h1>
-      <p className="mt-8 text-lg leading-relaxed text-charcoal-soft">{help.intro}</p>
+    <DocPage heading={help.heading} backHome={help.backHome}>
+      <p className={docText}>{help.intro}</p>
 
-      <h2 className="mt-14 text-xl font-semibold tracking-[-0.01em]">{help.hooks.heading}</h2>
-      <ul className="mt-4 flex list-disc flex-col gap-3 pl-5 text-lg leading-relaxed text-charcoal-soft">
-        {help.hooks.items.map((item, i) => (
-          <li key={i}>{item}</li>
+      <DocHeading>{help.hooks.heading}</DocHeading>
+      <ul className={docList}>
+        {help.hooks.items.map((item) => (
+          <li key={item}>{item}</li>
         ))}
       </ul>
 
-      <h2 className="mt-14 text-xl font-semibold tracking-[-0.01em]">
-        {help.troubleshooting.heading}
-      </h2>
-      <dl className="mt-4 flex flex-col gap-6">
-        {help.troubleshooting.rows.map((row) => (
-          <div key={row.symptom}>
-            <dt className="font-medium">{row.symptom}</dt>
-            <dd className="mt-1 leading-relaxed text-charcoal-soft">{row.check}</dd>
-          </div>
-        ))}
-      </dl>
-
-      <h2 className="mt-14 text-xl font-semibold tracking-[-0.01em]">{help.updates.heading}</h2>
-      <p className="mt-4 text-lg leading-relaxed text-charcoal-soft">{help.updates.body}</p>
-
-      <h2 className="mt-14 text-xl font-semibold tracking-[-0.01em]">{help.uninstall.heading}</h2>
-      <p className="mt-4 text-lg leading-relaxed text-charcoal-soft">{help.uninstall.intro}</p>
-      <pre className="mt-3 overflow-x-auto rounded-lg bg-cream-deep px-4 py-3 text-sm">
-        <code>{help.uninstall.command}</code>
-      </pre>
-      <p className="mt-4 text-lg leading-relaxed text-charcoal-soft">{help.uninstall.outro}</p>
-      <ul className="mt-3 flex list-disc flex-col gap-2 pl-5 leading-relaxed text-charcoal-soft">
-        {help.uninstall.files.map((file) => (
-          <li key={file}>
-            <code className="text-sm">{file}</code>
-          </li>
+      <DocHeading>{help.board.heading}</DocHeading>
+      <ul className={docList}>
+        {help.board.items.map((item) => (
+          <li key={item}>{item}</li>
         ))}
       </ul>
+      <p className={docText}>
+        <Link href="/flash" className={linkClass}>
+          {help.board.flashLink}
+        </Link>
+      </p>
 
-      <p className="mt-14 text-lg leading-relaxed text-charcoal-soft">
+      <DocHeading>{help.uninstall.heading}</DocHeading>
+      <p className={docText}>{help.uninstall.body}</p>
+
+      <DocHeading>{help.more.heading}</DocHeading>
+      <p className={docText}>{help.more.body}</p>
+      <p className={`${docText} flex flex-wrap gap-x-6 gap-y-2`}>
+        <a href={help.more.readme.url} className={linkClass}>
+          {help.more.readme.label}
+        </a>
+        <a href={help.more.issues.url} className={linkClass}>
+          {help.more.issues.label}
+        </a>
+      </p>
+
+      <p className={docText}>
         {help.contact}{" "}
-        <a
-          href={`mailto:${copy.footer.contactEmail}`}
-          className="underline underline-offset-4 hover:text-charcoal"
-        >
+        <a href={`mailto:${copy.footer.contactEmail}`} className={linkClass}>
           {copy.footer.contactEmail}
         </a>
         .
       </p>
-
-      <Link
-        href="/"
-        className="mt-14 inline-block text-sm text-charcoal-soft underline-offset-4 hover:text-charcoal hover:underline"
-      >
-        {help.backHome}
-      </Link>
-    </main>
+    </DocPage>
   );
 }

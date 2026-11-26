@@ -1,30 +1,37 @@
 import type { ReactNode } from "react";
 
 /*
-  Standard section shell: the data-section hook for scroll-depth tracking, the
-  1100px column, and the minimum-120px vertical breathing. Separation by space
-  alone — no cards, borders, or alternating backgrounds (SPEC.md §4.3).
+  Standard section shell: the data-section hook for scroll-depth tracking and
+  the page column. `band` gives a section the deeper peach background.
 */
 export function Section({
   id,
   label,
   children,
+  band = false,
   className = "",
-  inner = "",
 }: {
   id: string;
   label: string;
   children: ReactNode;
+  band?: boolean;
   className?: string;
-  inner?: string;
 }) {
   return (
     <section
       data-section={id}
       aria-label={label}
-      className={`px-6 py-20 md:py-28 ${className}`}
+      className={`px-5 py-16 md:py-24 ${band ? "bg-peach-deep" : ""} ${className}`}
     >
-      <div className={`mx-auto max-w-[1100px] ${inner}`}>{children}</div>
+      <div className="mx-auto max-w-[1040px]">{children}</div>
     </section>
+  );
+}
+
+export function SectionHeading({ children }: { children: ReactNode }) {
+  return (
+    <h2 className="text-[clamp(1.9rem,6vw,2.75rem)] font-semibold leading-[1.1] tracking-[-0.01em]">
+      {children}
+    </h2>
   );
 }

@@ -5,28 +5,28 @@ import { useState } from "react";
 import { track } from "@vercel/analytics";
 import { submitEmail, type SignupSource } from "@/lib/submit";
 import { getPriceCohort } from "@/lib/attribution";
+import { trackTikTokSignup } from "@/lib/tiktok";
 import { copy } from "@/lib/copy";
-import { ctaClass } from "@/lib/ui";
+import { ctaClass, inputClass } from "@/lib/ui";
 
 /*
-  Shared email capture, used by both the hero modal and the footer. On success,
-  navigates to /welcome with the returned position + referral code.
+  The waitlist form, used in the hero and the footer. It sits on the page, with
+  no modal in front of it: most visitors arrive on a phone. On success it goes
+  to /welcome with the signup's code, which the optional questions are saved
+  against.
 */
 export function EmailForm({
   source,
   buttonLabel,
   placeholder,
-  autoFocus = false,
-  layout = "stacked",
 }: {
   source: SignupSource;
   buttonLabel: string;
   placeholder: string;
-  autoFocus?: boolean;
-  layout?: "stacked" | "inline";
 }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "error">("idle");
 
   async function onSubmit(e: React.FormEvent) {
@@ -34,23 +34,19 @@ export function EmailForm({
     if (state === "loading") return;
     setState("loading");
     try {
-      const { position, referralCode } = await submitEmail(email.trim(), source);
+      const { referralCode } = await submitEmail(email.trim(), source, website);
       track("signup", { source, cohort: getPriceCohort() });
-      router.push(`/welcome?pos=${position}&code=${encodeURIComponent(referralCode)}`);
+      trackTikTokSignup();
+      router.push(`/welcome?code=${encodeURIComponent(referralCode)}`);
     } catch {
       setState("error");
     }
   }
 
-  const wrap =
-    layout === "inline"
-      ? "flex flex-col gap-3 sm:flex-row"
-      : "flex flex-col gap-3";
-
   return (
-    <form onSubmit={onSubmit} className={wrap} noValidate>
+    <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap" noValidate>
       <label className="sr-only" htmlFor={`email-${source}`}>
-        Email address
+        {copy.form.emailLabel}
       </label>
       <input
         id={`email-${source}`}
@@ -59,21 +55,40 @@ export function EmailForm({
         inputMode="email"
         autoComplete="email"
         required
-        autoFocus={autoFocus}
         placeholder={placeholder}
         value={email}
         onChange={(e) => {
           setEmail(e.target.value);
           if (state === "error") setState("idle");
         }}
-        className="w-full flex-1 rounded-full border border-charcoal/15 bg-cream-deep px-6 py-4 text-charcoal placeholder:text-charcoal-soft/70 focus-visible:border-amber"
+        className={inputClass}
       />
-      <button type="submit" className={ctaClass} disabled={state === "loading"}>
-        {state === "loading" ? "…" : buttonLabel}
+      {/* Honeypot: people never see or reach this field, and form-filling bots
+          fill it in. The API quietly drops any signup that has it set. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label>
+          Website
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </label>
+      </div>
+      <button
+        type="submit"
+        className={ctaClass}
+        disabled={state === "loading"}
+        data-testid={`${source}-submit`}
+      >
+        {state === "loading" ? copy.form.loading : buttonLabel}
       </button>
       {state === "error" && (
-        <p role="alert" className="text-sm text-charcoal-soft sm:basis-full">
-          {copy.modal.error}
+        <p role="alert" className="text-sm text-ink-soft sm:basis-full">
+          {copy.form.error}
         </p>
       )}
     </form>

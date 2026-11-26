@@ -7,17 +7,21 @@ import type { Attribution } from "@/lib/attribution";
     - An in-memory store when ALLOW_INMEM=1 and no DATABASE_URL (Playwright).
   Without either, the backend is "not ready" and the API returns 503, so the
   page still renders (fail-open, like everything else in this project).
-  See SPEC.md §6.2 / §11.3.
+  The referral columns (referral_code, referral_count, ref_code_used) are still
+  written, and the code is the key the /welcome answers are saved against. The
+  page no longer shows a place in line or a referral link.
 */
 
 export type SubmitInput = {
   email: string;
-  source: "hero" | "adoption" | "footer";
+  source: "hero" | "footer";
   attr: Attribution;
 };
 
 export type SubmitResult = { position: number; referralCode: string; created: boolean };
-export type ExpectationInput = { code: string; answer: string };
+/** The optional questions on /welcome, saved against the signup's code. */
+export type AnswerField = "price_expectation" | "video_source";
+export type AnswerInput = { code: string; field: AnswerField; answer: string };
 
 const CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
@@ -52,6 +56,7 @@ type MemRow = {
   referral_count: number;
   ref_code_used?: string;
   price_expectation?: string;
+  video_source?: string;
   created_at: number;
 };
 
@@ -87,9 +92,9 @@ function submitInMemory(input: SubmitInput): SubmitResult {
   return { position: Math.max(1, rank), referralCode: row.referral_code, created: true };
 }
 
-function saveExpectationInMemory(input: ExpectationInput): void {
+function saveAnswerInMemory(input: AnswerInput): void {
   const row = mem.find((r) => r.referral_code === input.code);
-  if (row) row.price_expectation = input.answer;
+  if (row) row[input.field] = input.answer;
 }
 
 /* ---------------- Postgres backend ---------------- */
@@ -151,15 +156,16 @@ async function submitInPostgres(
   return { position: Math.max(1, rank), referralCode: code, created: true };
 }
 
-async function saveExpectationInPostgres(
+async function saveAnswerInPostgres(
   sql: NonNullable<ReturnType<typeof getSql>>,
-  input: ExpectationInput,
+  input: AnswerInput,
 ): Promise<void> {
-  await sql`
-    update signups
-    set price_expectation = ${input.answer}
-    where referral_code = ${input.code}
-  `;
+  // Column names can't be parameters, so each field has its own statement.
+  if (input.field === "video_source") {
+    await sql`update signups set video_source = ${input.answer} where referral_code = ${input.code}`;
+  } else {
+    await sql`update signups set price_expectation = ${input.answer} where referral_code = ${input.code}`;
+  }
 }
 
 export async function submitSignup(input: SubmitInput): Promise<SubmitResult> {
@@ -169,9 +175,9 @@ export async function submitSignup(input: SubmitInput): Promise<SubmitResult> {
   throw new Error("waitlist backend not configured");
 }
 
-export async function saveExpectation(input: ExpectationInput): Promise<void> {
+export async function saveAnswer(input: AnswerInput): Promise<void> {
   const sql = getSql();
-  if (sql) return saveExpectationInPostgres(sql, input);
-  if (allowInmem()) return saveExpectationInMemory(input);
+  if (sql) return saveAnswerInPostgres(sql, input);
+  if (allowInmem()) return saveAnswerInMemory(input);
   throw new Error("waitlist backend not configured");
 }

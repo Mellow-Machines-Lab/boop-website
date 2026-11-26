@@ -1,43 +1,55 @@
 import Link from "next/link";
-import { copy } from "@/lib/copy";
-import { Section } from "@/components/Section";
+import { copy, REPO_URL } from "@/lib/copy";
+import { Section, SectionHeading } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
-import { FooterSignup } from "@/components/FooterSignup";
+import { EmailForm } from "@/components/EmailForm";
 
-/* S8 — Footer. Inline email capture, tiny links, sign-off, wordmark. */
+/* S7: the footer signup, small links, sign-off. */
 export function Footer() {
   return (
-    <Section id="S8" label="Get in line" className="pb-24">
+    <Section id="S7" label={copy.footer.heading} className="pb-16">
       <Reveal>
-        <div className="flex flex-col items-center gap-8 text-center">
-          <FooterSignup />
+        <div className="mx-auto flex max-w-lg flex-col gap-5 text-center">
+          <SectionHeading>{copy.footer.heading}</SectionHeading>
+          <p className="text-lg text-ink-soft">{copy.footer.body}</p>
+          <div className="text-left">
+            <EmailForm
+              source="footer"
+              buttonLabel={copy.footer.ctaLabel}
+              placeholder={copy.footer.placeholder}
+            />
+          </div>
+        </div>
 
-          <nav className="flex items-center gap-6 text-sm text-charcoal-soft">
-            {/* escape valve for visitors not ready to hand over an email — renders
-                once the build-in-public account exists (TODOs.md at git tag archived-final) */}
+        <div className="mt-16 flex flex-col items-center gap-6 text-center">
+          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-ink-soft">
             {copy.footer.followBuild.url && (
               <a
                 href={copy.footer.followBuild.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-charcoal"
+                className="hover:text-ink"
               >
                 {copy.footer.followBuild.label}
               </a>
             )}
-            <Link href="/privacy" className="hover:text-charcoal">
+            <a href={REPO_URL} className="hover:text-ink">
+              {copy.footer.source}
+            </a>
+            <Link href="/help" className="hover:text-ink">
+              {copy.footer.help}
+            </Link>
+            <Link href="/privacy" className="hover:text-ink">
               {copy.footer.privacy}
             </Link>
-            <a href={`mailto:${copy.footer.contactEmail}`} className="hover:text-charcoal">
+            {/* LAUNCH BLOCKER: this inbox must exist before launch (see copy.ts). */}
+            <a href={`mailto:${copy.footer.contactEmail}`} className="hover:text-ink">
               {copy.footer.contact}
             </a>
           </nav>
 
-          <p className="max-w-md text-sm text-charcoal-soft">{copy.footer.signoff}</p>
-
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-charcoal-soft/70">
-            {copy.footer.wordmark} · {copy.footer.copyright}
-          </p>
+          <p className="max-w-md text-sm text-ink-soft">{copy.footer.signoff}</p>
+          <p className="text-sm text-ink-soft/80">{copy.footer.copyright}</p>
         </div>
       </Reveal>
     </Section>

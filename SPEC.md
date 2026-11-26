@@ -1,5 +1,11 @@
 # Boop Landing Page — Technical Specification
 
+> **Out of date, kept for history.** This is the July 2026 spec. The product
+> changed after it was written: Boop only watches and never approves anything,
+> the character is a gel slime on a screen, and the Founding Litter framing is
+> gone. For how the site works now, read `README.md`. For what Boop is, read the
+> README of Mellow-Machines-Lab/buddygotchi.
+
 Status: implemented; media strategy amended — see Amendment A (§14); section/copy revisions — see Amendment B (§15)
 Last updated: 2026-07-03
 Source documents: `MARKETING.md` (Part 2 is the marketing-side page spec; Part 3 is the demand test this page powers), `PRODUCT.md` (§9 form factor, §11 positioning, §12 agent-era value prop), both in `archived/research/product/` at git tag `archived-final`

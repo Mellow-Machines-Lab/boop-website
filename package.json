@@ -1,5 +1,5 @@
 {
-  "name": "boop-landing",
+  "name": "boop-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,9 @@
     "test:e2e": "playwright test",
     "db:push": "node scripts/db-push.mjs",
     "emails:build": "node scripts/emails-build.mjs",
-    "email:test": "node scripts/email-send-test.mjs"
+    "email:test": "node scripts/email-send-test.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "og": "node scripts/og.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

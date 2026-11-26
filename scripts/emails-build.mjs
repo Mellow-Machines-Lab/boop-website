@@ -59,7 +59,7 @@ function generate() {
     .split("\n")
     .join("\n  ")},`).join("\n");
 
-  return `// GENERATED — edit emails/*.md then \`npm run emails:build\`
+  return `// GENERATED: edit emails/*.md then \`npm run emails:build\`
 
 export const EMAIL_TEMPLATES = {
 ${body}
@@ -74,7 +74,7 @@ const generated = generate();
 if (check) {
   const current = existsSync(outFile) ? readFileSync(outFile, "utf8") : "";
   if (current !== generated) {
-    console.error("landing/src/lib/email-templates.ts is out of sync. Run `npm run emails:build`.");
+    console.error("src/lib/email-templates.ts is out of sync. Run `npm run emails:build`.");
     process.exit(1);
   }
   process.exit(0);

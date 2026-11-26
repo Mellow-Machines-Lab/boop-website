@@ -1,44 +1,45 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { copy } from "@/lib/copy";
-import { FlashButton } from "@/components/FlashButton";
+import { linkClass } from "@/lib/ui";
+import { DocPage, docText } from "@/components/DocPage";
 
 export const metadata: Metadata = {
-  title: "Flash — Boop",
-  robots: { index: false, follow: false },
+  title: copy.flash.title,
+  robots: { index: true, follow: true },
 };
 
+/*
+  How to flash a board yourself, as the buddygotchi README has it: `make flash`
+  over USB. There is no web flasher. The README is the full guide.
+*/
 export default function FlashPage() {
-  // Hidden until hardware ships: the page 404s unless the flag is set at
-  // build time, and /firmware/ artifacts are only published at release
-  // (TODOs.md at git tag archived-final).
-  if (process.env.NEXT_PUBLIC_SHOW_FLASH !== "true") {
-    notFound();
-  }
   const flash = copy.flash;
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24 md:py-32">
-      <h1 className="text-3xl font-semibold tracking-[-0.02em]">{flash.heading}</h1>
-      <div className="mt-8 flex flex-col gap-5 text-lg leading-relaxed text-charcoal-soft">
-        <p>{flash.intro}</p>
-        <p>{flash.warning}</p>
-      </div>
-      <div className="mt-10 rounded-lg border border-charcoal/15 bg-cream-deep p-6">
-        <FlashButton />
-      </div>
-      <p className="mt-8 text-lg leading-relaxed text-charcoal-soft">{flash.after}</p>
-      <p className="mt-4 text-lg leading-relaxed text-charcoal-soft">
-        <Link href="/help" className="underline underline-offset-4 hover:text-charcoal">
+    <DocPage heading={flash.heading} backHome={flash.backHome}>
+      <p className={docText}>{flash.intro}</p>
+      <ol className="mt-8 flex flex-col gap-8">
+        {flash.steps.map((step, i) => (
+          <li key={step.title}>
+            <h2 className="text-xl font-semibold">
+              {i + 1}. {step.title}
+            </h2>
+            <pre className="mt-3 overflow-x-auto rounded-2xl bg-bezel px-4 py-3 font-mono text-sm text-white">
+              <code>{step.code}</code>
+            </pre>
+            {"note" in step && <p className="mt-3 leading-relaxed text-ink-soft">{step.note}</p>}
+          </li>
+        ))}
+      </ol>
+      <p className={docText}>{flash.needs}</p>
+      <p className={`${docText} flex flex-wrap gap-x-6 gap-y-2`}>
+        <a href={flash.readme.url} className={linkClass}>
+          {flash.readme.label}
+        </a>
+        <Link href="/help" className={linkClass}>
           {flash.helpLink}
         </Link>
       </p>
-      <Link
-        href="/"
-        className="mt-14 inline-block text-sm text-charcoal-soft underline-offset-4 hover:text-charcoal hover:underline"
-      >
-        {flash.backHome}
-      </Link>
-    </main>
+    </DocPage>
   );
 }

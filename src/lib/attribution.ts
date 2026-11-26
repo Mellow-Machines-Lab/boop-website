@@ -1,8 +1,9 @@
 /*
   First-touch attribution for the demand test. Reads UTM params, price cohort,
   referral code, and referrer on the first visit and stores them in a single
-  first-party cookie. Later organic revisits do NOT overwrite paid attribution.
-  The waitlist API reads this cookie server-side. See SPEC.md §7.2.
+  first-party cookie for 30 days. The waitlist API reads this cookie
+  server-side and stores it on the signup row. Covered by
+  tests/attribution.test.mjs.
 */
 export type Attribution = {
   priceCohort?: number;
@@ -38,11 +39,36 @@ function parseCohort(raw: string | null): number | undefined {
   return VALID_COHORTS.has(n) ? n : undefined;
 }
 
-/** Run once on first load. First-touch only. */
+function readStored(): Attribution | null {
+  const raw = readCookie(ATTR_COOKIE);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as Attribution;
+  } catch {
+    return null;
+  }
+}
+
+/** True when a visit carries a campaign: any UTM tag or a referral code. */
+function hasCampaign(attr: Attribution): boolean {
+  return Boolean(attr.ref_code_used) || UTM_KEYS.some((key) => Boolean(attr[key]));
+}
+
+/**
+  Run on every page load. First touch wins: the first visit's tags are stored
+  and later visits don't change them. So a visit with
+  ?utm_source=tiktok&utm_medium=bio is stored as tiktok / bio and stays that
+  way.
+
+  One exception: if the stored first touch has no campaign at all (a direct
+  visit), and this visit has one, the campaign is recorded. Otherwise someone
+  who typed the address once and later tapped the TikTok link would count as
+  "direct" for ever.
+*/
 export function captureAttribution(): void {
   if (typeof document === "undefined") return;
-  if (readCookie(ATTR_COOKIE)) return; // already captured — leave it alone
 
+  const stored = readStored();
   const q = new URLSearchParams(window.location.search);
   const attr: Attribution = { ts: new Date().toISOString() };
 
@@ -51,18 +77,24 @@ export function captureAttribution(): void {
 
   for (const key of UTM_KEYS) {
     const v = q.get(key);
-    if (v) attr[key] = v;
+    if (v) attr[key] = v.slice(0, 200);
   }
 
   const ref = q.get("ref");
-  if (ref) attr.ref_code_used = ref;
-  if (document.referrer) attr.referrer = document.referrer;
+  if (ref) attr.ref_code_used = ref.slice(0, 32);
+  if (document.referrer) attr.referrer = document.referrer.slice(0, 500);
+
+  if (stored) {
+    if (hasCampaign(stored) || !hasCampaign(attr)) return; // first touch stands
+    // Keep what the direct visit already fixed: its price cohort.
+    if (stored.priceCohort) attr.priceCohort = stored.priceCohort;
+  }
 
   writeCookie(ATTR_COOKIE, JSON.stringify(attr), 30);
 }
 
 /**
-  Price cohort for analytics only — never shown on the page. Reads the cookie,
+  Price cohort for analytics only: never shown on the page. Reads the cookie,
   falls back to a live ?p= param, then $119.
 */
 export function getPriceCohort(): number {
