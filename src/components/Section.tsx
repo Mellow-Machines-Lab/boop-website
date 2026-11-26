@@ -30,7 +30,7 @@ export function Section({
 
 export function SectionHeading({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-[clamp(1.9rem,6vw,2.75rem)] font-semibold leading-[1.1] tracking-[-0.01em]">
+    <h2 className="text-[clamp(1.8rem,5.6vw,2.6rem)] font-bold leading-[1.1] tracking-[-0.02em]">
       {children}
     </h2>
   );

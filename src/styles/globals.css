@@ -96,6 +96,14 @@ h3 {
   animation: needs-you 2.4s var(--ease-gel) infinite;
 }
 
+/* On a short phone the hero drops its scribbled label, so the form still fits
+   on the first screen. */
+@media (max-height: 700px) {
+  .hide-when-short {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

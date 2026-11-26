@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Fredoka } from "next/font/google";
+import { Caveat, Figtree } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Analytics } from "@vercel/analytics/next";
@@ -12,11 +12,11 @@ import "@/styles/globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.adoptaboop.com";
 
-// A rounded display face for headings, and a handwritten one for the few
-// scribbled labels. Body text stays Geist; Boop's voice is Geist Mono.
-const display = Fredoka({
+// A friendly geometric face for headings (soft, but not cartoonish), and a
+// handwritten one for the two scribbled labels. Body text is Geist.
+const display = Figtree({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["500", "600", "700"],
   variable: "--font-display",
   display: "swap",
 });

@@ -32,7 +32,7 @@ export default async function WelcomePage({
         priority
         className="h-40 w-40 rounded-[2rem] border-2 border-ink/10"
       />
-      <h1 className="mt-8 text-[clamp(2.1rem,8vw,3.25rem)] font-semibold leading-[1.05]">
+      <h1 className="mt-8 text-[clamp(2.1rem,8vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.02em]">
         {copy.welcome.heading}
       </h1>
       <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-soft">{copy.welcome.subline}</p>

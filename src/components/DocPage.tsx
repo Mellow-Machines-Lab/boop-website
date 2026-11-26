@@ -14,10 +14,10 @@ export function DocPage({
 }) {
   return (
     <main className="mx-auto max-w-2xl px-5 pb-24 pt-5">
-      <Link href="/" className="font-display text-2xl font-semibold tracking-[-0.01em]">
+      <Link href="/" className="font-display text-2xl font-bold tracking-[-0.02em]">
         {copy.brand.wordmark}
       </Link>
-      <h1 className="mt-12 text-[clamp(2rem,7vw,2.75rem)] font-semibold leading-[1.1]">
+      <h1 className="mt-12 text-[clamp(2rem,7vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em]">
         {heading}
       </h1>
       {children}
